@@ -9,5 +9,16 @@ const carrinho = [
 const getNome = item => item.nome
 const qtdMaiorZero = item => item.qtde > 0
 
-console.log(carrinho.filter(qtdMaiorZero).map(getNome))
+//console.log(carrinho.filter(qtdMaiorZero).map(getNome))
 
+Array.prototype.meuFilter = function(fn) {
+    const novoArray = []
+    for(let i = 0; i < this.length; i++) {
+        if(fn(this[i], i, this)) {
+            novoArray.push(this[i])
+        }   
+    }
+    return novoArray
+}
+
+console.log(carrinho.meuFilter(qtdMaiorZero).map(getNome))
