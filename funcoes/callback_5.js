@@ -12,5 +12,20 @@ const somar = (acc, el) => {
     return acc + el
 }
 
-const totalGeral = carrinho.map(getTotal).reduce(somar, 0)
+// const totalGeral = carrinho.map(getTotal).reduce(somar, 0)
+// console.log(totalGeral)
+
+Array.prototype.meuReduce = function(fn, inicial) {
+    let acc = inicial
+    for(let i = 0; i < this.length; i++) {
+        if(!acc && i === 0) {
+            acc = this[i]
+        } else {
+            acc = fn(acc, this[i], i, this)
+        }
+    }
+    return acc
+}
+
+const totalGeral = carrinho.map(getTotal).meuReduce(somar, 0)
 console.log(totalGeral)
