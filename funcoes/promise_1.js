@@ -1,18 +1,10 @@
-
-
-function primeiroNome(array){
-    return array[0]
-}
-
-function primeiraLetra(string){
-    return string[0]
-}
-
+const primeiroNome = array => array[0]
+const primeiraLetra = string => string[0]
 const letraMinuscula = letra => letra.toLowerCase()
 
 new Promise(function(cumprirPromessa){
     cumprirPromessa(['Ana','Bia','Carlos','Gabriel'])     
- })
+})
 .then(primeiroNome)
 .then(primeiraLetra)
 .then(letraMinuscula)
