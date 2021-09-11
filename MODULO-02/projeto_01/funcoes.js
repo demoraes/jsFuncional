@@ -30,7 +30,7 @@ function lerArquivos(caminhos) {
 }
 
 function elementorTerminadosCom(padrao) {
-    return function(array) {
+    return function (array) {
         return array.filter(el => el.endsWith(padrao))
     }
 }
@@ -53,7 +53,7 @@ function removerElementosSeApenasNumero(array) {
 }
 
 function removerSimbolos(simbolos) {
-    return function(array) {
+    return function (array) {
         return array.map(el => {
             let textSemSimbolos = el
             simbolos.forEach(simbolo => {
@@ -69,7 +69,7 @@ function mesclarElementos(array) {
 }
 
 function separarTextoPor(simbolo) {
-    return function(texto) {
+    return function (texto) {
         return texto.split(simbolo)
     }
 }
@@ -84,6 +84,14 @@ function agruparElementos(palavras) {
     }, {}))
 }
 
+function ordenarPorAtribNumerico(attr, ordem = 'asc') {
+    return function (array) {
+        const asc = (o1, o2) => o1[attr] - o2[attr]
+        const desc = (o1, o2) => o2[attr] - o1[attr]
+        return array.sort(ordem === 'asc' ? asc : desc)
+    }
+}
+
 module.exports = {
     lerDiretorio,
     lerArquivo,
@@ -95,5 +103,6 @@ module.exports = {
     removerSimbolos,
     separarTextoPor,
     mesclarElementos,
-    agruparElementos
+    agruparElementos,
+    ordenarPorAtribNumerico
 }
