@@ -37,10 +37,15 @@ function removerVazio(array) {
     return array.filter(el => el.trim())
 }
 
+function removerSeIncluir(array, padraoTextual) {
+    return array.filter(el => !el.includes(padraoTextual))
+}
+
 module.exports = {
     lerDiretorio,
     lerArquivo,
     lerArquivos,
     elementorTerminadosCom,
-    removerVazio
+    removerVazio,
+    removerSeIncluir
 }
