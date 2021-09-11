@@ -9,13 +9,17 @@ const simbolos = [
     '(', ')', '♪'
 ]
 
+
+
 fn.lerDiretorio(caminho)
     .then(fn.elementorTerminadosCom('.srt'))
     .then(fn.lerArquivos)
-    .then(conteudos => conteudos.join('\n'))
-    .then(todoConteudo => todoConteudo.split('\n'))
+    .then(fn.mesclarElementos)
+    .then(fn.separarTextoPor('\n'))
     .then(fn.removerElementosVazio)
     .then(fn.removerElementosSeIncluir('-->'))
     .then(fn.removerElementosSeApenasNumero)
     .then(fn.removerSimbolos(simbolos))
+    .then(fn.mesclarElementos)
+    .then(fn.separarTextoPor(' '))
     .then(console.log)
