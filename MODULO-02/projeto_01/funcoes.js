@@ -14,10 +14,6 @@ function lerDiretorio(caminho) {
     })
 }
 
-function elementorTerminadosCom(array, padrao) {
-    return array.filter(el => el.endsWith(padrao))
-}
-
 function lerArquivo(caminho) {
     return new Promise((resolve, reject) => {
         try {
@@ -33,10 +29,18 @@ function lerArquivos(caminhos) {
     return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
+function elementorTerminadosCom(array, padrao) {
+    return array.filter(el => el.endsWith(padrao))
+}
+
+function removerVazio(array) {
+    return array.filter(el => el.trim())
+}
 
 module.exports = {
     lerDiretorio,
     lerArquivo,
     lerArquivos,
     elementorTerminadosCom,
+    removerVazio
 }
