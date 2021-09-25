@@ -7,6 +7,9 @@ const pessoa = {
     }
 }
 
+// Atribuição por Referência
+const outraPessoa = pessoa
+
 // Passagem por Referência
 // Neste caso estamos criando um novo array o que deixa o objeto original imutavel
 function alterarPessoa(pessoa) {
