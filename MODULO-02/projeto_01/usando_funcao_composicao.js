@@ -9,7 +9,7 @@ const simbolos = [
     '(', ')', '♪'
 ]
 
-fn.composicao(
+const palavrasMaisUsadas = fn.composicao(
     fn.lerDiretorio,
     fn.elementorTerminadosCom('.srt'),
     fn.lerArquivos,
@@ -24,5 +24,7 @@ fn.composicao(
     fn.removerElementosVazio,
     fn.agruparElementos,
     fn.ordenarPorAtribNumerico('qtde', 'desc'),
-    console.log
-)(caminho)
+)
+
+palavrasMaisUsadas(caminho)
+    .then(console.log)
