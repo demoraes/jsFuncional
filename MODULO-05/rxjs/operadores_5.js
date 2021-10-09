@@ -4,9 +4,13 @@ function terminadoCom(parteFinal) {
     return function (fonte) {
         return Observable.create(subscriber => {
             fonte.subscribe({
-                next(texto) {
-                    if (texto.endsWith(parteFinal)) {
-                        subscriber.next(texto)
+                next(valor) {
+                    if (Array.isArray(valor)) {
+                        subscriber.next(
+                            valor.filter(el => el.endsWith(parteFinal))
+                        )
+                    } else if (valor.endsWith(parteFinal)) {
+                        subscriber.next(valor)
                     }
                 },
                 error(e) {
@@ -20,6 +24,6 @@ function terminadoCom(parteFinal) {
     }
 }
 
-of('Ana Silva', 'Maria Silva', 'Pedro Rocha')
-    .pipe(terminadoCom('Silva'))
+of(['Ana Silva', 'Maria Silva', 'Pedro Rocha'])
+    .pipe(terminadoCom('va'))
     .subscribe(console.log)
