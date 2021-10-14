@@ -1,6 +1,6 @@
 const path = require('path')
 const fn = require('./funcoes')
-const { first } = require('rxjs/operators')
+const { toArray } = require('rxjs/operators')
 
 const caminho = path.join(__dirname, '..', 'dados', 'legendas')
 
@@ -19,7 +19,9 @@ fn.lerDiretorio(caminho)
         fn.removerElementosSeApenasNumero(),
         fn.removerSimbolos(simbolos),
         fn.separarTextoPor(' '),
-        fn.removerElementosVazio()
+        fn.removerElementosVazio(),
+        toArray(),
+        fn.agruparElementos()
         //first()
     )
     .subscribe(console.log)
