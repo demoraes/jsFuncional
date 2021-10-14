@@ -2,6 +2,19 @@ const fs = require('fs')
 const path = require('path')
 const { Observable } = require('rxjs')
 
+function createPipeableOperator(operatorFn) {
+    return function (source) {
+        return Observable.create(subscriber => {
+            const sub = operatorFn(subscriber)
+            source.subscribe({
+                next: sub.next,
+                error: sub.error || (e => subscriber.error(e)),
+                complete: sub.complete || (e => subscriber.complete(e))
+            })
+        })
+    }
+}
+
 function lerDiretorio(caminho) {
     return new Observable(subscriber => {
         try {
@@ -30,11 +43,16 @@ function lerArquivos(caminhos) {
     return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
 }
 
-function elementorTerminadosCom(padrao) {
-    return function (array) {
-        return array.filter(el => el.endsWith(padrao))
-    }
+function elementosTerminadosCom(padraoTextual) {
+    return createPipeableOperator(subscriber=>({
+        next(texto) {
+            if(texto.endsWith(padraoTextual)) {
+                subscriber.next(texto)
+            }
+        }
+    }))
 }
+
 
 function removerElementosVazio(array) {
     return array.filter(el => el.trim())
@@ -96,7 +114,7 @@ module.exports = {
     lerDiretorio,
     lerArquivo,
     lerArquivos,
-    elementorTerminadosCom,
+    elementosTerminadosCom,
     removerElementosVazio,
     removerElementosSeIncluir,
     removerElementosSeApenasNumero,

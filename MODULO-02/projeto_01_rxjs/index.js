@@ -10,6 +10,9 @@ const caminho = path.join(__dirname, '..', 'dados', 'legendas')
 // ]
 
 fn.lerDiretorio(caminho)
+    .pipe(
+        fn.elementosTerminadosCom('.srt')
+    )
     .subscribe(console.log)
 
 // fn.lerDiretorio(caminho)
