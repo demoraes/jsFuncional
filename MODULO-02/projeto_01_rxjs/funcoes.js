@@ -56,8 +56,14 @@ function elementosTerminadosCom(padraoTextual) {
 }
 
 
-function removerElementosVazio(array) {
-    return array.filter(el => el.trim())
+function removerElementosVazio() {
+    return createPipeableOperator(subscriber => ({
+        next(texto) {
+            if(texto.trim()) {
+                subscriber.next(texto)
+            }
+        }
+    }))
 }
 
 function removerElementosSeIncluir(padraoTextual) {

@@ -15,6 +15,7 @@ fn.lerDiretorio(caminho)
         fn.elementosTerminadosCom('.srt'),
         fn.lerArquivo(),
         fn.separarTextoPor('\n'),
+        fn.removerElementosVazio()
         //first()
     )
     .subscribe(console.log)
