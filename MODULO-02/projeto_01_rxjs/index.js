@@ -11,7 +11,8 @@ const caminho = path.join(__dirname, '..', 'dados', 'legendas')
 
 fn.lerDiretorio(caminho)
     .pipe(
-        fn.elementosTerminadosCom('.srt')
+        fn.elementosTerminadosCom('.srt'),
+        fn.lerArquivo()
     )
     .subscribe(console.log)
 

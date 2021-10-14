@@ -19,7 +19,7 @@ function lerDiretorio(caminho) {
     return new Observable(subscriber => {
         try {
             fs.readdirSync(caminho).forEach(arquivo => {
-                 subscriber.next(path.join(caminho, arquivo))
+                subscriber.next(path.join(caminho, arquivo))
             })
             subscriber.complete()
         } catch (e) {
@@ -28,25 +28,27 @@ function lerDiretorio(caminho) {
     })
 }
 
-function lerArquivo(caminho) {
-    return new Promise((resolve, reject) => {
-        try {
-            const conteudo = fs.readFileSync(caminho, { encoding: 'utf-8' })
-            resolve(conteudo.toString())
-        } catch (e) {
-            reject(e)
+function lerArquivo() {
+    return createPipeableOperator(subscriber => ({
+        next(caminho) {
+            try {
+                const conteudo = fs.readFileSync(caminho, {
+                    encoding: 'utf-8'
+                })
+                subscriber.next(conteudo.toString())
+                subscriber.complete()
+            } catch (e) {
+                subscriber.error()
+            }
         }
-    })
+    }))
 }
 
-function lerArquivos(caminhos) {
-    return Promise.all(caminhos.map(caminho => lerArquivo(caminho)))
-}
 
 function elementosTerminadosCom(padraoTextual) {
-    return createPipeableOperator(subscriber=>({
+    return createPipeableOperator(subscriber => ({
         next(texto) {
-            if(texto.endsWith(padraoTextual)) {
+            if (texto.endsWith(padraoTextual)) {
                 subscriber.next(texto)
             }
         }
@@ -113,7 +115,6 @@ function ordenarPorAtribNumerico(attr, ordem = 'asc') {
 module.exports = {
     lerDiretorio,
     lerArquivo,
-    lerArquivos,
     elementosTerminadosCom,
     removerElementosVazio,
     removerElementosSeIncluir,
